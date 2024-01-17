@@ -2,13 +2,9 @@ import { Body, Controller, HttpCode, Post } from '@nestjs/common'
 import { UsersService } from './users.service';
 import { LoginDTO } from './dto/LoginDTO'
 import {
-  ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiParam,
-  ApiResponse,
   ApiTags, ApiUnauthorizedResponse,
-  getSchemaPath,
 } from '@nestjs/swagger'
 import { UserDTO } from './dto/UserDTO'
 import { UnauthorizedException } from '../errors/UnauthorizedException'
