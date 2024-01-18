@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common'
 import { ToursService } from './tours.service';
-import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiProperty, ApiTags } from '@nestjs/swagger'
+import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { ICreateTourDTO } from './dto/ICreateTourDTO'
 import { BadRequestException } from '../errors/BadRequestException'
 
