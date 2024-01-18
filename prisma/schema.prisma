@@ -16,3 +16,11 @@ model User {
   password String
   role     String @default("user")
 }
+
+model Tour {
+  id          String   @id @unique @default(uuid())
+  name        String   @unique
+  description String
+  dateStart   DateTime
+  dateEnd     DateTime
+}
