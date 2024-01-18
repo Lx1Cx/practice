@@ -8,13 +8,13 @@ import {
 } from '@nestjs/swagger'
 import { UserDTO } from './dto/UserDTO'
 import { UnauthorizedException } from '../errors/UnauthorizedException'
+import { IRegistrationDTO } from './dto/IRegistrationDTO'
 
 @ApiTags("users")
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @HttpCode(200)
   @ApiOperation({summary: "Авторизация пользователя"})
   @ApiOkResponse({
     status: 200,
@@ -26,5 +26,15 @@ export class UsersController {
   @Post("/login")
   async login(@Body() loginDTO: LoginDTO): Promise<UserDTO> {
     return await this.usersService.loginAsync(loginDTO)
+  }
+
+  @ApiOperation({summary: "Регистрация пользователя"})
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse({
+    type: UnauthorizedException
+  })
+  @Post("/registration")
+  async registration(@Body() registrationDTO: IRegistrationDTO) {
+    return await this.usersService.registrationAsync(registrationDTO)
   }
 }

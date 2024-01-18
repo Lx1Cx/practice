@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { LoginDTO } from './dto/LoginDTO'
 import { PrismaService } from '../database/Database'
 import { JwtService } from '@nestjs/jwt'
+import { IRegistrationDTO } from './dto/IRegistrationDTO'
 
 @Injectable()
 export class UsersService {
@@ -34,7 +35,24 @@ export class UsersService {
         }
    }
 
-   async registrationAsync() {
+   async registrationAsync({login, password}: IRegistrationDTO) {
+        const user = await this.prisma.user.findUnique({
+            where: {
+                login: login,
+            }
+        })
 
+       if (user) {
+           throw new UnauthorizedException({
+               displayMessage: "Пользователь с таким логином уже есть"
+           })
+       }
+
+        await this.prisma.user.create({
+            data: {
+               login: login,
+               password: password
+            }
+        })
    }
 }
