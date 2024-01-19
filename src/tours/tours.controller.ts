@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Put, Query } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common'
 import { ToursService } from './tours.service';
 import { ApiBadRequestResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { ICreateTourDTO } from './dto/ICreateTourDTO'
