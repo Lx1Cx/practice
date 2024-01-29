@@ -3,11 +3,11 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { UsersModule } from './users/users.module';
 import { AppLoggerMiddleware } from './middleware/AppLoggerMiddleware'
-import { ToursModule } from './tours/tours.module';
 import { OrdersModule } from './orders/orders.module';
+import { TourPlacesModule } from './tour-places/tour-places.module';
 
 @Module({
-    imports: [UsersModule, ToursModule, OrdersModule],
+    imports: [UsersModule, OrdersModule, TourPlacesModule],
     controllers: [AppController],
     providers: [AppService],
 })
