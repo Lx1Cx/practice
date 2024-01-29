@@ -11,26 +11,46 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  login    String @unique
+  id       Int     @id @default(autoincrement())
+  login    String  @unique
   password String
-  role     String @default("user")
-  orders Order[]
+  role     String  @default("user")
+  orders   Order[]
 }
 
 model Tour {
-  id          String   @id @unique @default(uuid())
-  name        String   @unique
+  id          String @id @unique @default(uuid())
+  name        String @unique
   description String
-  dateStart   DateTime
-  dateEnd     DateTime
-  orders Order[]
+  price       Int
+  adderss     String
+
+  from           TourPlaces @relation("from", fields: [tourPlacesFrom], references: [id])
+  tourPlacesFrom String
+
+  to           TourPlaces @relation("to", fields: [tourPlacesTo], references: [id])
+  tourPlacesTo String
+
+  dateStart DateTime
+  dateEnd   DateTime
+
+  orders       Order[]
+  tourPlacesId String
+  TourPlaces   TourPlaces @relation(fields: [tourPlacesId], references: [id])
+}
+
+model TourPlaces {
+  id       String @id @unique @default(uuid())
+  name     String @unique
+  tourFrom Tour[] @relation("from")
+  tourTo   Tour[] @relation("to")
+  Tour     Tour[]
 }
 
 model Order {
-  id String @id @unique @default(uuid())
-  user User @relation(fields: [userId], references: [id])
+  id     String @id @unique @default(uuid())
+  user   User   @relation(fields: [userId], references: [id])
   userId Int
-  tour Tour @relation(fields: [tourId], references: [id])
+  tour   Tour   @relation(fields: [tourId], references: [id])
   tourId String
 }
