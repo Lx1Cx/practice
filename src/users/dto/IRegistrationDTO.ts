@@ -1,10 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsString } from 'class-validator'
+import { IsString, Length } from 'class-validator'
 
 export class IRegistrationDTO {
-    @ApiProperty()
+    @ApiProperty({
+        default: "tester"
+    })
+    @IsString()
+    @Length(6, 12)
     login: string
 
+    @ApiProperty({
+        default: "tester"
+    })
     @IsString()
+    @Length(6, 12)
     password: string
 }
