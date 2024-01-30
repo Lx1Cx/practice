@@ -40,11 +40,19 @@ model Tour {
 }
 
 model TourPlaces {
-  id       String @id @unique @default(uuid())
-  name     String @unique
-  tourFrom Tour[] @relation("from")
-  tourTo   Tour[] @relation("to")
-  Tour     Tour[]
+  id          String  @id @unique @default(uuid())
+  name        String  @unique
+  description String
+  tourFrom    Tour[]  @relation("from")
+  tourTo      Tour[]  @relation("to")
+  Tour        Tour[]
+  images      Files[] @relation("TourPlaceToFile")
+}
+
+model Files {
+  id              String       @id @unique @default(uuid())
+  name            String       @unique
+  TourPlacesImage TourPlaces[] @relation("TourPlaceToFile")
 }
 
 model Order {
