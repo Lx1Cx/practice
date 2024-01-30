@@ -3,6 +3,7 @@ import { PrismaService } from '../database/Database'
 import { TourPlaces } from '@prisma/client'
 import { ICreatePlaceDto } from './dto/ICreatePlaceDto'
 import { IUpdatePlaceDto } from './dto/IUpdatePlaceDto'
+import { Express } from 'express'
 
 @Injectable()
 export class TourPlacesService {
@@ -11,13 +12,20 @@ export class TourPlacesService {
     }
 
     getAll() {
-        return this.prisma.tourPlaces.findMany()
+        return this.prisma.tourPlaces.findMany({
+            include: {
+                images: true
+            }
+        })
     }
 
-    async getByIdAsync(id: string): Promise<TourPlaces> {
+    async getByIdAsync(id: string) {
         const place = await this.prisma.tourPlaces.findUnique({
             where: {
                 id: id
+            },
+            include: {
+                images: true
             }
         })
 
@@ -30,7 +38,7 @@ export class TourPlacesService {
         return place
     }
 
-    async createPlace({name}: ICreatePlaceDto) {
+    async createPlace({name, description}: ICreatePlaceDto) {
         const findPlaceResult = await this.prisma.tourPlaces.findUnique({
             where: { name }
         })
@@ -42,7 +50,10 @@ export class TourPlacesService {
         }
 
         return this.prisma.tourPlaces.create({
-            data: { name }
+            data: {
+                name,
+                description
+            }
         })
     }
 
