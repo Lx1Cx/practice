@@ -6,5 +6,11 @@ export class IUpdatePlaceDto {
     @IsString({
         message: "Имя должно быть строкой"
     })
-    name: string
+    name?: string
+
+    @ApiProperty()
+    @IsString({
+        message: "Описание должно быть строкой"
+    })
+    description?: string
 }

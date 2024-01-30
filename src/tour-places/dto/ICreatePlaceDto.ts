@@ -7,4 +7,10 @@ export class ICreatePlaceDto {
         message: "Имя должно быть строкой"
     })
     name: string
+
+    @ApiProperty()
+    @IsString({
+        message: "Описание должно быть строкой"
+    })
+    description: string
 }
