@@ -1,8 +1,9 @@
-import { Controller, Get, Post, UploadedFile, UseInterceptors } from '@nestjs/common'
+import { Controller, Delete, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common'
 import { FilesService } from './files.service';
-import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBody, ApiConsumes, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { Express } from 'express'
+import { NotFoundException } from '../errors/NotFoundException'
 
 @ApiTags("Files")
 @Controller('files')
@@ -28,10 +29,15 @@ export class FilesController {
     return this.filesService.uploadFile(file)
   }
 
-  @Get(``)
-  @ApiOperation({summary: "Получение файла"})
-  getFile() {
-
+  @Delete(":name")
+  @ApiOperation({summary: "Удаление файла с сервера"})
+  @ApiOkResponse({
+    status: 200
+  })
+  @ApiNotFoundResponse({
+    type: NotFoundException
+  })
+  deleteFileByName(@Param("name") name: string) {
+    return this.filesService.deleteFileByName(name)
   }
-
 }

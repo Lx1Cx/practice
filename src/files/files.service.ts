@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { Express } from 'express'
 import * as uuid from 'uuid';
 import * as path from 'path'
@@ -24,5 +24,22 @@ export class FilesService {
         }
 
         fs.appendFileSync(newFilePath, file.buffer)
+    }
+
+    async deleteFileByName(name: string) {
+
+        if (!fs.existsSync(path.resolve("static", name))) {
+            throw new NotFoundException({
+                displayMessage: "Файл не найден"
+            })
+        }
+
+        fs.unlink(path.resolve("static", name), (err) => {
+            if (err) {
+                throw new BadRequestException({
+                    displayMessage: err.message
+                })
+            }
+        })
     }
 }
