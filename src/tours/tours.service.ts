@@ -2,7 +2,6 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { Tour } from '@prisma/client'
 import { CreateTourDto } from './dto/CreateTourDto'
 import { PrismaService } from '../database/Database'
-import { TourEntity } from './tour.entity'
 
 @Injectable()
 export class ToursService {
