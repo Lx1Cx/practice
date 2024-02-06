@@ -36,7 +36,7 @@ export class TourPlacesService {
         return place
     }
 
-    async createPlace({name, description}: ICreatePlaceDto) {
+    async createPlace({name, description, imageIds}: ICreatePlaceDto) {
         const findPlaceResult = await this.prisma.tourPlaces.findUnique({
             where: { name }
         })
@@ -50,7 +50,12 @@ export class TourPlacesService {
         return this.prisma.tourPlaces.create({
             data: {
                 name,
-                description
+                description,
+                images: {
+                    connect: imageIds.map(id => ({
+                        id: id
+                    }))
+                }
             }
         })
     }
