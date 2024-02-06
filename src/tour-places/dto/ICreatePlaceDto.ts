@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator'
+import { IsArray, IsString } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 
 export class ICreatePlaceDto {
@@ -13,4 +13,8 @@ export class ICreatePlaceDto {
         message: "Описание должно быть строкой"
     })
     description: string
+
+    @ApiProperty()
+    @IsArray()
+    imageIds: string[]
 }
