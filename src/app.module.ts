@@ -7,6 +7,7 @@ import { OrdersModule } from './orders/orders.module';
 import { TourPlacesModule } from './tour-places/tour-places.module';
 import { FilesModule } from './files/files.module';
 import { ServeStaticModule } from '@nestjs/serve-static'
+import { ToursModule } from './tours/tours.module';
 import * as path from 'path'
 
 @Module({
@@ -18,6 +19,7 @@ import * as path from 'path'
         ServeStaticModule.forRoot({
             rootPath: path.resolve(__dirname, "..", "static")
         }),
+        ToursModule,
     ],
     controllers: [AppController],
     providers: [AppService],
