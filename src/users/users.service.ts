@@ -30,7 +30,8 @@ export class UsersService {
             accessToken: await this.jwt.signAsync({
                 id: user.id,
                 login: user.login,
-                role: user.role
+                role: user.role,
+                expiredAt: new Date().getDate() + 1
             }, {secret: "secret", expiresIn: "1d"}),
         }
    }
@@ -54,5 +55,24 @@ export class UsersService {
                password: password
             }
         })
+   }
+
+   async updateAuth(token: string) {
+        const verifyToken = this.jwt.verify(token, {secret: "secret"})
+
+       if (!verifyToken) {
+           throw new UnauthorizedException({
+               displayMessage: "Переавторизуйтесь пожалуйста"
+           })
+       }
+
+       return {
+           accessToken: await this.jwt.signAsync({
+               id: verifyToken.id,
+               login: verifyToken.login,
+               role: verifyToken.role,
+               expiredAt: new Date().getDate() + 1
+           }, {secret: "secret", expiresIn: "1d"}),
+       }
    }
 }

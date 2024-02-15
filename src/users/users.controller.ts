@@ -9,6 +9,7 @@ import {
 import { UserDTO } from './dto/UserDTO'
 import { UnauthorizedException } from '../errors/UnauthorizedException'
 import { IRegistrationDTO } from './dto/IRegistrationDTO'
+import { IUpdateTokenDto } from './dto/IUpdateTokenDto'
 
 @ApiTags("users")
 @Controller('users')
@@ -36,5 +37,15 @@ export class UsersController {
   @Post("/registration")
   async registration(@Body() registrationDTO: IRegistrationDTO) {
     return await this.usersService.registrationAsync(registrationDTO)
+  }
+
+  @ApiOperation({summary: "Обновление токена"})
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse({
+    type: UnauthorizedException
+  })
+  @Post("/update")
+  async updateToken(@Body() requestData: IUpdateTokenDto) {
+    return await this.usersService.updateAuth(requestData.token)
   }
 }
