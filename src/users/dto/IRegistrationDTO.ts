@@ -6,13 +6,11 @@ export class IRegistrationDTO {
         default: "tester"
     })
     @IsString()
-    @Length(6, 12)
     login: string
 
     @ApiProperty({
         default: "tester"
     })
     @IsString()
-    @Length(6, 12)
     password: string
 }
