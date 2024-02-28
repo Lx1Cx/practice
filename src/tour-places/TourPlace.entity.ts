@@ -6,4 +6,7 @@ export class TourPlaceEntity {
 
     @ApiProperty()
     name: string
+
+    @ApiProperty()
+    description: string
 }
