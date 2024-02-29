@@ -3,9 +3,12 @@ import { Express } from 'express'
 import * as uuid from 'uuid';
 import * as path from 'path'
 import * as fs from 'fs'
+import { PrismaService } from '../database/Database'
 
 @Injectable()
 export class FilesService {
+
+    constructor(private readonly prisma: PrismaService) {}
 
     async uploadFile(file: Express.Multer.File) {
         const fileExtension = path.extname(file.originalname)
@@ -24,6 +27,12 @@ export class FilesService {
         }
 
         fs.appendFileSync(newFilePath, file.buffer)
+
+        return this.prisma.files.create({
+            data: {
+                name: newFileName
+            }
+        })
     }
 
     async deleteFileByName(name: string) {
@@ -39,6 +48,12 @@ export class FilesService {
                 throw new BadRequestException({
                     displayMessage: err.message
                 })
+            }
+        })
+
+        return this.prisma.files.delete({
+            where: {
+                name: name
             }
         })
     }
