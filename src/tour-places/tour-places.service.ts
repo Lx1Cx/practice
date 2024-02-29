@@ -56,6 +56,9 @@ export class TourPlacesService {
                         id: id
                     }))
                 }
+            },
+            include: {
+                images: true
             }
         })
     }
@@ -76,7 +79,7 @@ export class TourPlacesService {
         })
     }
 
-    async updateByIdAsync(id: string, {name} : IUpdatePlaceDto) {
+    async updateByIdAsync(id: string, {name, description, imageIds} : IUpdatePlaceDto) {
         const findPlace = await this.prisma.tourPlaces.findUnique({
             where: { id }
         })
@@ -87,9 +90,29 @@ export class TourPlacesService {
             })
         }
 
+        this.prisma.tourPlaces.update({
+            where: {id},
+            data: {
+                images: {
+                    set: []
+                }
+            }
+        })
+
         return this.prisma.tourPlaces.update({
             where: { id },
-            data: { name }
+            data: {
+                name,
+                description,
+                images: {
+                    connect: imageIds.map(id => ({
+                        id: id
+                    }))
+                }
+            },
+            include: {
+                images: true
+            }
         })
     }
 }

@@ -9,4 +9,10 @@ export class TourPlaceEntity {
 
     @ApiProperty()
     description: string
+
+    @ApiProperty()
+    images: {
+        id: string
+        name: string
+    }[]
 }
