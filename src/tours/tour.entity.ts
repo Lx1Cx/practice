@@ -14,9 +14,6 @@ export class TourEntity {
     price: number
 
     @ApiProperty()
-    address: string
-
-    @ApiProperty()
     dateStart: Date
 
     @ApiProperty()

@@ -14,10 +14,6 @@ export class CreateTourDto {
     @ApiProperty()
     price: number
 
-    @IsString()
-    @ApiProperty()
-    address: string
-
     @IsDate()
     @ApiProperty()
     dateStart: Date
