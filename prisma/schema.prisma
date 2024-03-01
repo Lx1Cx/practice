@@ -23,7 +23,6 @@ model Tour {
   name        String @unique
   description String
   price       Int
-  address     String
 
   from           TourPlaces @relation("from", fields: [tourPlacesFrom], references: [id])
   tourPlacesFrom String
