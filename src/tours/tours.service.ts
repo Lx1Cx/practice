@@ -26,11 +26,18 @@ export class ToursService {
                 name: requestData.name,
                 description: requestData.description,
                 price: requestData.price,
-                address: requestData.address,
                 dateStart: requestData.dateStart,
                 dateEnd: requestData.dateEnd,
-                tourPlacesTo: requestData.tourPlaceTo,
-                tourPlacesFrom: requestData.tourPlaceFrom,
+                to: {
+                    connect: {
+                        id: requestData.tourPlaceTo
+                    }
+                },
+                from: {
+                    connect: {
+                        id: requestData.tourPlaceFrom
+                    }
+                },
                 images: {
                     connect: requestData.images_Ids.map(id => ({
                         id: id
