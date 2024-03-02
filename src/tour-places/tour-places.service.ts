@@ -2,6 +2,8 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { PrismaService } from '../database/Database'
 import { ICreatePlaceDto } from './dto/ICreatePlaceDto'
 import { IUpdatePlaceDto } from './dto/IUpdatePlaceDto'
+import { Tour } from '@prisma/client'
+import { TourPlaceEntity } from './TourPlace.entity'
 
 @Injectable()
 export class TourPlacesService {
@@ -36,7 +38,7 @@ export class TourPlacesService {
         return place
     }
 
-    async createPlace({name, description, imageIds}: ICreatePlaceDto) {
+    async createPlace({name, description, imageIds}: ICreatePlaceDto): Promise<TourPlaceEntity> {
         const findPlaceResult = await this.prisma.tourPlaces.findUnique({
             where: { name }
         })

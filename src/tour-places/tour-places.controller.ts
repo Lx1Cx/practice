@@ -6,6 +6,7 @@ import { NotFoundException } from '../errors/NotFoundException'
 import { BadRequestException } from '../errors/BadRequestException'
 import { ICreatePlaceDto } from './dto/ICreatePlaceDto'
 import { IUpdatePlaceDto } from './dto/IUpdatePlaceDto'
+import { Tour } from '@prisma/client'
 
 @ApiTags("tour-places")
 @Controller('tour-places')

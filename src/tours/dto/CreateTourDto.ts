@@ -14,21 +14,19 @@ export class CreateTourDto {
     @ApiProperty()
     price: number
 
-    @IsDate()
     @ApiProperty()
     dateStart: Date
 
-    @IsDate()
     @ApiProperty()
     dateEnd: Date
 
     @IsString()
     @ApiProperty()
-    tourPlaceFrom: string
+    from: string
 
     @IsString()
     @ApiProperty()
-    tourPlaceTo: string
+    to: string
 
     @IsArray()
     @ApiProperty()

@@ -24,11 +24,11 @@ model Tour {
   description String
   price       Int
 
-  from           TourPlaces @relation("from", fields: [tourPlacesFrom], references: [id])
-  tourPlacesFrom String
+  tourFrom        TourPlaces @relation("from", fields: [from], references: [id])
+  from String
 
-  to           TourPlaces @relation("to", fields: [tourPlacesTo], references: [id])
-  tourPlacesTo String
+  tourTo          TourPlaces @relation("to", fields: [to], references: [id])
+  to String
 
   dateStart DateTime
   dateEnd   DateTime
@@ -42,8 +42,10 @@ model TourPlaces {
   id          String  @id @unique @default(uuid())
   name        String  @unique
   description String
-  tourFrom    Tour[]  @relation("from")
-  tourTo      Tour[]  @relation("to")
+
+  from    Tour[]  @relation("from")
+  to      Tour[]  @relation("to")
+
   images      Files[] @relation("TourPlaceToFile")
 }
 

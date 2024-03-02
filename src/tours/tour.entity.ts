@@ -20,8 +20,8 @@ export class TourEntity {
     dateEnd: Date
 
     @ApiProperty()
-    tourPlaceFrom: string
+    from: string
 
     @ApiProperty()
-    tourPlaceTo: string
+    to: string
 }

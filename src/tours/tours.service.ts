@@ -28,14 +28,14 @@ export class ToursService {
                 price: requestData.price,
                 dateStart: requestData.dateStart,
                 dateEnd: requestData.dateEnd,
-                to: {
+                tourTo: {
                     connect: {
-                        id: requestData.tourPlaceTo
+                        id: requestData.to
                     }
                 },
-                from: {
+                tourFrom: {
                     connect: {
-                        id: requestData.tourPlaceFrom
+                        id: requestData.from
                     }
                 },
                 images: {
@@ -50,8 +50,10 @@ export class ToursService {
     getAll(): Promise<Tour[]> {
         return this.prisma.tour.findMany({
             include: {
-                images: true
-            }
+                images: true,
+                tourTo: true,
+                tourFrom: true
+            },
         })
     }
 
