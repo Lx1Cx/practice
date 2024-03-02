@@ -2,7 +2,6 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { PrismaService } from '../database/Database'
 import { ICreatePlaceDto } from './dto/ICreatePlaceDto'
 import { IUpdatePlaceDto } from './dto/IUpdatePlaceDto'
-import { Tour } from '@prisma/client'
 import { TourPlaceEntity } from './TourPlace.entity'
 
 @Injectable()
