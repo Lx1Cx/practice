@@ -1,7 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common'
 import { ToursService } from './tours.service';
 import { Tour } from '@prisma/client'
-import { ApiBadRequestResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
+import {
+  ApiBadRequestResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger'
 import { CreateTourDto } from './dto/CreateTourDto'
 import { TourEntity } from './tour.entity'
 import { BadRequestException } from '../errors/BadRequestException'
@@ -18,8 +25,10 @@ export class ToursController {
     type: TourEntity,
     isArray: true
   })
-  getAll(): Promise<Tour[]> {
-    return this.toursService.getAll()
+  @ApiQuery({name: "place", required: false})
+  @ApiQuery({name: "name", required: false})
+  getAll(@Query("place") place?: string, @Query("name") tourName?: string): Promise<Tour[]> {
+    return this.toursService.getAll(place, tourName)
   }
 
   @Get(":tourId")
@@ -35,7 +44,7 @@ export class ToursController {
   }
 
   @Post()
-  @ApiOperation({summary: "Содать тур"})
+  @ApiOperation({summary: "Создать тур"})
   @ApiOkResponse({
     type: TourEntity
   })
