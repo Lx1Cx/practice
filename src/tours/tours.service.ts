@@ -47,12 +47,22 @@ export class ToursService {
         })
     }
 
-    getAll(): Promise<Tour[]> {
+    getAll(place?: string, tourName?: string): Promise<Tour[]> {
         return this.prisma.tour.findMany({
+            where: {
+                name: {
+                    contains: tourName ?? "",
+                },
+                tourTo: {
+                    name: {
+                        contains: place ?? "",
+                    }
+                }
+            },
             include: {
                 images: true,
                 tourTo: true,
-                tourFrom: true
+                tourFrom: true,
             },
         })
     }
