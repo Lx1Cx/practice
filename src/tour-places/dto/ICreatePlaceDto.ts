@@ -4,13 +4,13 @@ import { ApiProperty } from '@nestjs/swagger'
 export class ICreatePlaceDto {
     @ApiProperty()
     @IsString({
-        message: "Имя должно быть строкой"
+        message: 'Имя должно быть строкой',
     })
     name: string
 
     @ApiProperty()
     @IsString({
-        message: "Описание должно быть строкой"
+        message: 'Описание должно быть строкой',
     })
     description: string
 

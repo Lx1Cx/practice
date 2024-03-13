@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common'
 import { PrismaService } from '../database/Database'
 import { ICreatePlaceDto } from './dto/ICreatePlaceDto'
 import { IUpdatePlaceDto } from './dto/IUpdatePlaceDto'
@@ -6,45 +10,48 @@ import { TourPlaceEntity } from './TourPlace.entity'
 
 @Injectable()
 export class TourPlacesService {
-
-    constructor(private readonly prisma: PrismaService) {
-    }
+    constructor(private readonly prisma: PrismaService) {}
 
     getAll() {
         return this.prisma.tourPlaces.findMany({
             include: {
-                images: true
-            }
+                images: true,
+            },
         })
     }
 
     async getByIdAsync(id: string) {
         const place = await this.prisma.tourPlaces.findUnique({
             where: {
-                id: id
+                id: id,
             },
             include: {
-                images: true
-            }
+                images: true,
+            },
         })
 
         if (!place) {
             throw new NotFoundException({
-                displayMessage: "Не найдено"
+                displayMessage: 'Не найдено',
             })
         }
 
         return place
     }
 
-    async createPlace({name, description, imageIds}: ICreatePlaceDto): Promise<TourPlaceEntity> {
+    async createPlace({
+        name,
+        description,
+        imageIds,
+    }: ICreatePlaceDto): Promise<TourPlaceEntity> {
         const findPlaceResult = await this.prisma.tourPlaces.findUnique({
-            where: { name }
+            where: { name },
         })
 
         if (findPlaceResult) {
             throw new BadRequestException({
-                displayMessage: "Место назначение с таким именем уже существует"
+                displayMessage:
+                    'Место назначение с таким именем уже существует',
             })
         }
 
@@ -53,51 +60,54 @@ export class TourPlacesService {
                 name,
                 description,
                 images: {
-                    connect: imageIds.map(id => ({
-                        id: id
-                    }))
-                }
+                    connect: imageIds.map((id) => ({
+                        id: id,
+                    })),
+                },
             },
             include: {
-                images: true
-            }
+                images: true,
+            },
         })
     }
 
     async deleteByIdAsync(id: string) {
         const findPlace = await this.prisma.tourPlaces.findUnique({
-            where: { id }
+            where: { id },
         })
 
         if (!findPlace) {
             throw new BadRequestException({
-                displayMessage: "Место назначение с id не существует"
+                displayMessage: 'Место назначение с id не существует',
             })
         }
 
         return this.prisma.tourPlaces.delete({
-            where: { id }
+            where: { id },
         })
     }
 
-    async updateByIdAsync(id: string, {name, description, imageIds} : IUpdatePlaceDto) {
+    async updateByIdAsync(
+        id: string,
+        { name, description, imageIds }: IUpdatePlaceDto,
+    ) {
         const findPlace = await this.prisma.tourPlaces.findUnique({
-            where: { id }
+            where: { id },
         })
 
         if (!findPlace) {
             throw new NotFoundException({
-                displayMessage: "Место назначение с id не существует"
+                displayMessage: 'Место назначение с id не существует',
             })
         }
 
         this.prisma.tourPlaces.update({
-            where: {id},
+            where: { id },
             data: {
                 images: {
-                    set: []
-                }
-            }
+                    set: [],
+                },
+            },
         })
 
         return this.prisma.tourPlaces.update({
@@ -106,14 +116,14 @@ export class TourPlacesService {
                 name,
                 description,
                 images: {
-                    connect: imageIds.map(id => ({
-                        id: id
-                    }))
-                }
+                    connect: imageIds.map((id) => ({
+                        id: id,
+                    })),
+                },
             },
             include: {
-                images: true
-            }
+                images: true,
+            },
         })
     }
 }

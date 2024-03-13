@@ -1,13 +1,14 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { UsersModule } from './users/users.module';
+import { UsersModule } from './users/users.module'
 import { AppLoggerMiddleware } from './middleware/AppLoggerMiddleware'
-import { OrdersModule } from './orders/orders.module';
-import { TourPlacesModule } from './tour-places/tour-places.module';
-import { FilesModule } from './files/files.module';
+import { OrdersModule } from './orders/orders.module'
+import { TourPlacesModule } from './tour-places/tour-places.module'
+import { FilesModule } from './files/files.module'
 import { ServeStaticModule } from '@nestjs/serve-static'
-import { ToursModule } from './tours/tours.module';
+import { ToursModule } from './tours/tours.module'
+import { FavoritesModule } from './favorites/favorites.module'
 import * as path from 'path'
 
 @Module({
@@ -17,15 +18,16 @@ import * as path from 'path'
         TourPlacesModule,
         FilesModule,
         ServeStaticModule.forRoot({
-            rootPath: path.resolve(__dirname, "..", "static")
+            rootPath: path.resolve(__dirname, '..', 'static'),
         }),
         ToursModule,
+        FavoritesModule,
     ],
     controllers: [AppController],
     providers: [AppService],
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer): void {
-        consumer.apply(AppLoggerMiddleware).forRoutes('*');
+        consumer.apply(AppLoggerMiddleware).forRoutes('*')
     }
 }

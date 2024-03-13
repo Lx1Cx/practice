@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 
-export class UnauthorizedException extends Error{
+export class UnauthorizedException extends Error {
     @ApiProperty()
     displayMessage: string
 }

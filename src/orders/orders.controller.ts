@@ -4,7 +4,7 @@ import { ICreateOrderDto } from './dto/ICreateOrderDto'
 import { ApiTags } from '@nestjs/swagger'
 import { Order } from '@prisma/client'
 
-@ApiTags("orders")
+@ApiTags('orders')
 @Controller('orders')
 export class OrdersController {
     constructor(private readonly ordersService: OrdersService) {}
@@ -15,7 +15,5 @@ export class OrdersController {
     }
 
     @Get()
-    async getAllAsync() {
-
-    }
+    async getAllAsync() {}
 }

@@ -16,6 +16,15 @@ model User {
   password String
   role     String  @default("user")
   orders   Order[]
+  favorites Favorites[]
+}
+
+model Favorites {
+  id Int @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int
+  tour   Tour   @relation(fields: [tourId], references: [id])
+  tourId String
 }
 
 model Tour {
@@ -34,7 +43,7 @@ model Tour {
   dateEnd   DateTime
 
   orders Order[]
-
+  favorites Favorites[]
   images Files[] @relation("TourImages")
 }
 

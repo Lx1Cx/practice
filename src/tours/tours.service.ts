@@ -1,23 +1,26 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common'
 import { Tour } from '@prisma/client'
 import { CreateTourDto } from './dto/CreateTourDto'
 import { PrismaService } from '../database/Database'
 
 @Injectable()
 export class ToursService {
-
     constructor(private prisma: PrismaService) {}
 
     async createAsync(requestData: CreateTourDto): Promise<Tour> {
         const findTour = await this.prisma.tour.findUnique({
             where: {
-                name: requestData.name
-            }
+                name: requestData.name,
+            },
         })
 
         if (findTour) {
             throw new BadRequestException({
-                displayMessage: "Тур с таким имнем уже есть"
+                displayMessage: 'Тур с таким имнем уже есть',
             })
         }
 
@@ -30,19 +33,19 @@ export class ToursService {
                 dateEnd: requestData.dateEnd,
                 tourTo: {
                     connect: {
-                        id: requestData.to
-                    }
+                        id: requestData.to,
+                    },
                 },
                 tourFrom: {
                     connect: {
-                        id: requestData.from
-                    }
+                        id: requestData.from,
+                    },
                 },
                 images: {
-                    connect: requestData.images_Ids.map(id => ({
-                        id: id
-                    }))
-                }
+                    connect: requestData.images_Ids.map((id) => ({
+                        id: id,
+                    })),
+                },
             },
         })
     }
@@ -51,13 +54,13 @@ export class ToursService {
         return this.prisma.tour.findMany({
             where: {
                 name: {
-                    contains: tourName ?? "",
+                    contains: tourName ?? '',
                 },
                 tourTo: {
                     name: {
-                        contains: place ?? "",
-                    }
-                }
+                        contains: place ?? '',
+                    },
+                },
             },
             include: {
                 images: true,
@@ -70,16 +73,16 @@ export class ToursService {
     async getByIdAsync(tourId: string): Promise<Tour> {
         const findTour = await this.prisma.tour.findUnique({
             where: {
-                id: tourId
+                id: tourId,
             },
             include: {
-                images: true
-            }
+                images: true,
+            },
         })
 
         if (!findTour) {
             throw new NotFoundException({
-                displayMessage: `Тур с id ${tourId} не найден`
+                displayMessage: `Тур с id ${tourId} не найден`,
             })
         }
 
@@ -89,20 +92,20 @@ export class ToursService {
     async deleteByIdAsync(tourId: string) {
         const findTour = this.prisma.tour.findUnique({
             where: {
-                id: tourId
-            }
+                id: tourId,
+            },
         })
 
         if (!findTour) {
             throw new NotFoundException({
-                displayMessage: `Тур с id ${tourId} не найден`
+                displayMessage: `Тур с id ${tourId} не найден`,
             })
         }
 
         return this.prisma.tour.delete({
             where: {
-                id: tourId
-            }
+                id: tourId,
+            },
         })
     }
 }
