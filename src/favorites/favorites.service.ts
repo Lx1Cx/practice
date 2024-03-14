@@ -6,12 +6,20 @@ export class FavoritesService {
 
     constructor(private readonly prisma: PrismaService) {}
 
-    getAll(userId: number) {
-        return this.prisma.favorites.findMany({
+    async getAll(userId: number) {
+
+        const result = await this.prisma.favorites.findMany({
             where: {
-                userId: userId
+                userId: Number(userId)
+            },
+            include: {
+                tour: true
             }
         })
+
+        console.log(result)
+
+        return result
     }
 
     addToFavorite(userId: number, tourId: string) {

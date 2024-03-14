@@ -17,7 +17,7 @@ export class FavoritesController {
     @Post("")
     @ApiOperation({summary: "Добавление в избранное"})
     addToFavorite(@Body() {userId, tourId}: AddToFavoriteDto) {
-        return this.favoritesService.addToFavorite(userId, tourId)
+        return this.favoritesService.addToFavorite(parseInt(userId), tourId)
     }
 
     @Delete(":favoriteId")
